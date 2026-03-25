@@ -221,7 +221,7 @@ async def create_checkout(req: CheckoutRequest, user=Depends(get_current_user)):
 
         async with httpx.AsyncClient() as client:
             resp = await client.post(
-                "https://sandbox-api.polar.sh/v1/checkouts/custom/",
+                "https://api.polar.sh/v1/checkouts/custom/",
                 headers={
                     "Authorization": f"Bearer {POLAR_ACCESS_TOKEN}",
                     "Content-Type": "application/json",
@@ -259,7 +259,7 @@ async def get_portal_url(user=Depends(get_current_user)):
             raise HTTPException(status_code=404, detail="No billing account found")
         async with httpx.AsyncClient() as client:
             resp = await client.post(
-                "https://sandbox-api.polar.sh/v1/customer-sessions/",
+                "https://api.polar.sh/v1/customer-sessions/",
                 headers={"Authorization": f"Bearer {POLAR_ACCESS_TOKEN}", "Content-Type": "application/json"},
                 json={"customer_id": customer_id}
             )
@@ -295,6 +295,11 @@ async def select_charity(req: CharitySelect, user=Depends(get_current_user)):
 
 # ===================== DRAW ROUTES =====================
 
+@api_router.get("/draws/my-results")
+async def get_my_results(user=Depends(get_current_user)):
+    results = supabase_admin.table("draw_results").select("*, draws(draw_date, winning_numbers)").eq("user_id", user["id"]).order("created_at", desc=True).execute()
+    return results.data or []
+
 @api_router.get("/draws")
 async def get_draws():
     result = supabase_admin.table("draws").select("*").eq("status", "published").order("draw_date", desc=True).execute()
@@ -307,11 +312,6 @@ async def get_draw(draw_id: str):
         raise HTTPException(status_code=404, detail="Draw not found")
     results = supabase_admin.table("draw_results").select("*, profiles(full_name, email)").eq("draw_id", draw_id).execute()
     return {**draw.data, "results": results.data or []}
-
-@api_router.get("/draws/my-results")
-async def get_my_results(user=Depends(get_current_user)):
-    results = supabase_admin.table("draw_results").select("*, draws(draw_date, winning_numbers)").eq("user_id", user["id"]).order("created_at", desc=True).execute()
-    return results.data or []
 
 # ===================== WINNER ROUTES =====================
 
