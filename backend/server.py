@@ -111,22 +111,32 @@ class ScoreUpdate(BaseModel):
 @api_router.post("/auth/signup")
 async def signup(req: SignupRequest):
     try:
-        result = supabase.auth.sign_up({
+        # Create user with admin API for auto-confirmation
+        result = supabase_admin.auth.admin.create_user({
             "email": req.email,
             "password": req.password,
-            "options": {"data": {"full_name": req.full_name}}
+            "email_confirm": True,
+            "user_metadata": {"full_name": req.full_name}
         })
         if result.user:
-            session = result.session
+            # Now sign in to get a session token
+            login_result = supabase.auth.sign_in_with_password({
+                "email": req.email,
+                "password": req.password
+            })
+            token = login_result.session.access_token if login_result.session else None
             return {
-                "user": {"id": str(result.user.id), "email": result.user.email},
-                "token": session.access_token if session else None,
+                "user": {"id": str(result.user.id), "email": result.user.email, "full_name": req.full_name, "role": "user"},
+                "token": token,
                 "message": "Account created successfully"
             }
         raise HTTPException(status_code=400, detail="Signup failed")
     except Exception as e:
         logger.error(f"Signup error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        detail = str(e)
+        if "already" in detail.lower() or "duplicate" in detail.lower():
+            detail = "An account with this email already exists"
+        raise HTTPException(status_code=400, detail=detail)
 
 @api_router.post("/auth/login")
 async def login(req: LoginRequest):
