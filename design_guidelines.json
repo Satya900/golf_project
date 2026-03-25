@@ -1,0 +1,148 @@
+{
+  "theme": "Light mode primary with organic, warm, and earthy tones. Avoid green/white golf clichés.",
+  "typography": {
+    "headings": {
+      "family": "Playfair Display",
+      "weights": ["400", "700", "900"],
+      "classes": "font-serif tracking-tight text-stone-900"
+    },
+    "body": {
+      "family": "Manrope",
+      "weights": ["400", "500", "600"],
+      "classes": "font-sans leading-relaxed text-stone-600"
+    },
+    "labels": {
+      "classes": "font-sans uppercase tracking-[0.2em] text-xs font-semibold text-stone-500"
+    }
+  },
+  "colors": {
+    "background": {
+      "primary": "bg-stone-50",
+      "secondary": "bg-white",
+      "dark_section": "bg-stone-900"
+    },
+    "text": {
+      "primary": "text-stone-900",
+      "secondary": "text-stone-600",
+      "muted": "text-stone-400",
+      "inverse": "text-stone-50"
+    },
+    "brand": {
+      "primary": "bg-orange-600",
+      "primary_hover": "hover:bg-orange-700",
+      "primary_text": "text-white",
+      "accent": "text-orange-600"
+    },
+    "borders": {
+      "default": "border-stone-200",
+      "dark": "border-stone-800"
+    }
+  },
+  "visual_enhancers": {
+    "surfaces": [
+      {
+        "name": "Crystal Glass",
+        "usage": "Sticky Nav, Modals",
+        "classes": "bg-white/80 backdrop-blur-2xl border-b border-white/40 shadow-sm saturate-150"
+      },
+      {
+        "name": "Editorial Cards",
+        "usage": "Charity Profiles, Dashboard Widgets",
+        "classes": "bg-white rounded-2xl border border-stone-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+      },
+      {
+        "name": "Dark Contrast Footer",
+        "usage": "Footer, CTA sections",
+        "classes": "bg-stone-900 text-stone-50"
+      }
+    ]
+  },
+  "grids_layouts": {
+    "marketing": {
+      "name": "Tetris Grid",
+      "classes": "grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12"
+    },
+    "dashboard": {
+      "name": "High Density Dashboard",
+      "classes": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    },
+    "spacing": "Use p-8 to p-12 for containers. Let elements breathe. Avoid dense grouping on marketing pages."
+  },
+  "components": {
+    "buttons": {
+      "primary": "rounded-full bg-orange-600 text-white px-8 py-3 hover:bg-orange-700 transition-colors focus:ring-2 focus:ring-orange-300",
+      "secondary": "rounded-full bg-stone-100 text-stone-900 px-8 py-3 hover:bg-stone-200 border border-stone-200 transition-colors"
+    },
+    "inputs": {
+      "default": "rounded-xl border-stone-200 bg-white px-4 py-3 focus:border-orange-500 focus:ring-orange-500 transition-all"
+    }
+  },
+  "motion": {
+    "hover": "Scale down slightly (active:scale-95), smooth color transitions.",
+    "entrance": "Staggered fade-up for lists and grid items.",
+    "marquee": "Use an Editorial Ribbon (react-fast-marquee) for charity names. Slow drift, wide gaps (gap-32), serif font."
+  },
+  "media": {
+    "image_style": "High contrast, emotional, warm lighting (sunset/sunrise), authentic people. Avoid stock-like generic smiling into camera."
+  },
+  "image_urls": [
+    {
+      "url": "https://images.unsplash.com/photo-1505794718076-13e166c01a33",
+      "category": "Hero / Emotion",
+      "description": "Silhouette of man holding golf club at sunset. Use in the main landing page hero section or subscription page to evoke emotion without the green cliché."
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1636315662384-8406112deaf1",
+      "category": "Score Entry / Dashboard",
+      "description": "Another evocative silhouette of a golfer for dashboard background headers or score entry."
+    },
+    {
+      "url": "https://images.pexels.com/photos/6646933/pexels-photo-6646933.jpeg",
+      "category": "Charity Spotlight / About",
+      "description": "A diverse group of volunteers organizing a charity event. Use in the Charity Directory or 'How it Works' section to highlight the impact."
+    },
+    {
+      "url": "https://images.pexels.com/photos/6995090/pexels-photo-6995090.jpeg",
+      "category": "Impact / Giving Back",
+      "description": "Volunteers sorting clothes, showing real authentic charity work. Ideal for the Charity detail page."
+    }
+  ],
+  "accessibility": {
+    "contrast": "Ensure 4.5:1 minimum on all text. Use text-orange-900 on orange backgrounds if white fails, though orange-600 with white is generally okay. Orange-700 is safer.",
+    "focus": "Always use focus:ring-2 on interactive elements.",
+    "testing": "All interactive elements MUST have data-testid attributes (e.g., data-testid='subscribe-button')."
+  },
+  "libraries": {
+    "icons": "@phosphor-icons/react (Duotone style for premium feel)",
+    "animations": "framer-motion, react-fast-marquee",
+    "charts": "recharts (wrapped in shadcn)",
+    "toasts": "sonner"
+  },
+  "instructions_to_main_agent": [
+    "Build the application using React (.js files), Tailwind CSS, and Shadcn components.",
+    "Install required libraries: framer-motion, @phosphor-icons/react, react-fast-marquee, recharts, sonner.",
+    "Do NOT use 'Inter', 'Roboto', or 'Open Sans' for headings. Use 'Playfair Display' via Google Fonts.",
+    "Do NOT use traditional golf greens or flags. Stick strictly to the warm stone and terracotta/orange palette.",
+    "Implement the 'Editorial Ribbon' using react-fast-marquee for showcasing charity names horizontally.",
+    "For the Landing Page, use a highly asymmetrical 'Tetris Grid'. For Dashboards, use the 'High Density Grid'.",
+    "Include 'data-testid' on every form input, button, and navigation link.",
+    "Use Shadcn UI components for complex interactions (Dropdown, Dialog, Form, Select, DatePicker) but restyle them to match the rounded-2xl, soft shadow aesthetic.",
+    "Ensure the CTA (Subscribe) is visually dominant using the primary orange color.",
+    "Create a mobile-first layout. Images MUST NOT exceed 80vh on mobile."
+  ],
+  "universal_guidelines": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Do not make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition (e.g., transition: all). Always add transitions for specific interactive elements.",
+    "You MUST NOT center align the app container. Do not add '.App { text-align: center; }'.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations.",
+    "NEVER use AI assistant Emoji characters for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Components MUST use named exports, Pages MUST use default exports.",
+    "Use 'sonner' for toasts.",
+    "DO NOT use complete transparent background in header, overlays, or any surface that has content under it."
+  ]
+}
