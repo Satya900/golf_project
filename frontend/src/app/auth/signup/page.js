@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -14,8 +14,18 @@ export default function SignupPage() {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [charities, setCharities] = useState([])
+  const [selectedCharityId, setSelectedCharityId] = useState('')
+  const [contributionPct, setContributionPct] = useState(10)
   const [loading, setLoading] = useState(false)
   const [showPw, setShowPw] = useState(false)
+
+  useEffect(() => {
+    api.getCharities().then((data) => {
+      setCharities(data)
+      if (data[0]?.id) setSelectedCharityId(data[0].id)
+    }).catch(() => {})
+  }, [])
 
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -25,7 +35,13 @@ export default function SignupPage() {
     }
     setLoading(true)
     try {
-      const res = await api.signup({ email, password, full_name: fullName })
+      const res = await api.signup({
+        email,
+        password,
+        full_name: fullName,
+        selected_charity_id: selectedCharityId || null,
+        charity_contribution_pct: contributionPct,
+      })
       if (res.token) {
         localStorage.setItem('golf_token', res.token)
         localStorage.setItem('golf_user', JSON.stringify(res.user))
@@ -92,6 +108,28 @@ export default function SignupPage() {
                     {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-stone-700 mb-1 block">Choose Your Charity</label>
+                <select
+                  value={selectedCharityId}
+                  onChange={(e) => setSelectedCharityId(e.target.value)}
+                  className="flex h-10 w-full rounded-xl border border-stone-200 bg-white px-4 py-2 text-sm text-stone-900 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 transition-all"
+                >
+                  {charities.map((charity) => (
+                    <option key={charity.id} value={charity.id}>{charity.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-stone-700 mb-1 block">Contribution Percentage</label>
+                <Input
+                  type="number"
+                  min="10"
+                  max="100"
+                  value={contributionPct}
+                  onChange={(e) => setContributionPct(parseInt(e.target.value, 10) || 10)}
+                />
               </div>
               <Button type="submit" className="w-full" disabled={loading} data-testid="signup-submit-button">
                 {loading ? 'Creating account...' : 'Create Account'}

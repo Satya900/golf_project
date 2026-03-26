@@ -6,6 +6,8 @@
 
 -- Drop existing tables to recreate with correct schema
 DROP TABLE IF EXISTS draw_results CASCADE;
+DROP TABLE IF EXISTS notifications CASCADE;
+DROP TABLE IF EXISTS charity_events CASCADE;
 DROP TABLE IF EXISTS charity_contributions CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS draws CASCADE;
@@ -79,7 +81,30 @@ CREATE TABLE charity_contributions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 6. Draws table
+-- 6. Charity Events table
+CREATE TABLE charity_events (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  charity_id UUID REFERENCES charities(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  description TEXT,
+  location TEXT,
+  event_date TIMESTAMPTZ NOT NULL,
+  registration_url TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 7. Notifications table
+CREATE TABLE notifications (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  type TEXT NOT NULL,
+  title TEXT NOT NULL,
+  message TEXT NOT NULL,
+  read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 8. Draws table
 CREATE TABLE draws (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   draw_date DATE NOT NULL,
@@ -96,7 +121,7 @@ CREATE TABLE draws (
   published_at TIMESTAMPTZ
 );
 
--- 7. Draw Results (winners) table
+-- 9. Draw Results (winners) table
 CREATE TABLE draw_results (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   draw_id UUID REFERENCES draws(id) ON DELETE CASCADE,
@@ -112,7 +137,7 @@ CREATE TABLE draw_results (
   paid_at TIMESTAMPTZ
 );
 
--- 8. Orders table (Polar payment events)
+-- 10. Orders table (Polar payment events)
 CREATE TABLE orders (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   polar_order_id TEXT UNIQUE,
@@ -135,10 +160,13 @@ CREATE INDEX idx_scores_played_date ON scores(played_date DESC);
 CREATE INDEX idx_charities_featured ON charities(featured);
 CREATE INDEX idx_charity_contributions_user ON charity_contributions(user_id);
 CREATE INDEX idx_charity_contributions_charity ON charity_contributions(charity_id);
+CREATE INDEX idx_charity_events_charity ON charity_events(charity_id);
+CREATE INDEX idx_charity_events_date ON charity_events(event_date);
 CREATE INDEX idx_draws_status ON draws(status);
 CREATE INDEX idx_draws_date ON draws(draw_date DESC);
 CREATE INDEX idx_draw_results_draw ON draw_results(draw_id);
 CREATE INDEX idx_draw_results_user ON draw_results(user_id);
+CREATE INDEX idx_notifications_user ON notifications(user_id);
 CREATE INDEX idx_orders_polar_id ON orders(polar_order_id);
 CREATE INDEX idx_orders_user ON orders(user_id);
 CREATE INDEX idx_profiles_email ON profiles(email);
@@ -180,6 +208,16 @@ CREATE TRIGGER profiles_updated_at BEFORE UPDATE ON profiles FOR EACH ROW EXECUT
 CREATE TRIGGER subscriptions_updated_at BEFORE UPDATE ON subscriptions FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 CREATE TRIGGER charities_updated_at BEFORE UPDATE ON charities FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
+-- Charity total rollup helper
+CREATE OR REPLACE FUNCTION increment_charity_total(charity_id_input UUID, amount_input NUMERIC)
+RETURNS void AS $$
+BEGIN
+  UPDATE charities
+  SET total_raised = COALESCE(total_raised, 0) + COALESCE(amount_input, 0)
+  WHERE id = charity_id_input;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 -- =====================================================
 -- ROW LEVEL SECURITY
 -- =====================================================
@@ -188,6 +226,8 @@ ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scores ENABLE ROW LEVEL SECURITY;
 ALTER TABLE charities ENABLE ROW LEVEL SECURITY;
 ALTER TABLE charity_contributions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE charity_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE draws ENABLE ROW LEVEL SECURITY;
 ALTER TABLE draw_results ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
@@ -215,6 +255,15 @@ CREATE POLICY "Service role full access charities" ON charities FOR ALL USING (a
 CREATE POLICY "Users can view own contributions" ON charity_contributions FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Service role full access contributions" ON charity_contributions FOR ALL USING (auth.role() = 'service_role');
 
+-- Charity Events: Public read
+CREATE POLICY "Anyone can view charity events" ON charity_events FOR SELECT USING (true);
+CREATE POLICY "Service role full access charity events" ON charity_events FOR ALL USING (auth.role() = 'service_role');
+
+-- Notifications
+CREATE POLICY "Users can view own notifications" ON notifications FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can update own notifications" ON notifications FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Service role full access notifications" ON notifications FOR ALL USING (auth.role() = 'service_role');
+
 -- Draws: Public read published
 CREATE POLICY "Anyone can view published draws" ON draws FOR SELECT USING (status = 'published');
 CREATE POLICY "Service role full access draws" ON draws FOR ALL USING (auth.role() = 'service_role');
@@ -237,6 +286,11 @@ INSERT INTO charities (name, description, image_url, category, featured) VALUES
 ('Birdie Brigade', 'A charity focused on using golf events to raise funds for children hospitals. Every birdie counts towards saving young lives.', 'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg', 'Healthcare', true),
 ('Tee It Forward', 'Empowering women and girls through golf scholarships, mentoring programs, and creating inclusive golfing environments globally.', 'https://images.unsplash.com/photo-1591491719622-6e71a352d0e4', 'Education', false),
 ('The Back Nine Project', 'Providing adaptive golf programs for individuals with disabilities. Making the sport accessible and enjoyable for everyone.', 'https://images.pexels.com/photos/7551667/pexels-photo-7551667.jpeg', 'Accessibility', false);
+
+INSERT INTO charity_events (charity_id, title, description, location, event_date, registration_url)
+SELECT id, 'Spring Charity Golf Day', 'Fundraising golf day with community coaching and donor meet-up.', 'Pune Golf Club', NOW() + INTERVAL '21 days', 'https://example.com/register'
+FROM charities
+WHERE name = 'Golf For Good Foundation';
 
 -- =====================================================
 -- DONE! You should see "Success. No rows returned" message

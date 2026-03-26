@@ -1,4 +1,4 @@
-// File: /app/frontend/src/app/admin/layout.js
+// File: C:\Users\mohan\OneDrive\Desktop\dev_main\Personal_SAAS\golf_project\frontend\src\app\admin\layout.js
 import * as entry from '../../../../src/app/admin/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

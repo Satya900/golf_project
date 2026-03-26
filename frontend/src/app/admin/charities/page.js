@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { api } from '@/lib/api'
 import { toast } from 'sonner'
+import Image from 'next/image'
 import { Plus, Pencil, Trash2, X, Check } from 'lucide-react'
 
 export default function AdminCharitiesPage() {
@@ -14,6 +15,7 @@ export default function AdminCharitiesPage() {
   const [showForm, setShowForm] = useState(false)
   const [editId, setEditId] = useState(null)
   const [form, setForm] = useState({ name: '', description: '', image_url: '', website_url: '', category: '', featured: false })
+  const [eventForm, setEventForm] = useState({ charityId: '', title: '', description: '', event_date: '', location: '', registration_url: '' })
 
   const loadCharities = () => {
     api.adminGetCharities().then(setCharities).catch(() => toast.error('Failed to load')).finally(() => setLoading(false))
@@ -58,6 +60,20 @@ export default function AdminCharitiesPage() {
       loadCharities()
     } catch {
       toast.error('Failed to delete')
+    }
+  }
+
+  const handleAddEvent = async () => {
+    if (!eventForm.charityId || !eventForm.title || !eventForm.event_date) {
+      toast.error('Event title, charity, and date are required')
+      return
+    }
+    try {
+      await api.adminAddCharityEvent(eventForm.charityId, eventForm)
+      toast.success('Event added')
+      setEventForm({ charityId: '', title: '', description: '', event_date: '', location: '', registration_url: '' })
+    } catch (err) {
+      toast.error(err.message || 'Failed to add event')
     }
   }
 
@@ -114,12 +130,54 @@ export default function AdminCharitiesPage() {
         </Card>
       )}
 
+      <Card className="mb-8">
+        <CardContent className="p-6">
+          <h3 className="font-serif text-lg font-bold text-stone-900 mb-4">Upcoming Charity Event</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm text-stone-600 block mb-1">Charity</label>
+              <select
+                value={eventForm.charityId}
+                onChange={(e) => setEventForm({ ...eventForm, charityId: e.target.value })}
+                className="h-10 rounded-xl border border-stone-200 px-3 text-sm w-full"
+              >
+                <option value="">Select charity</option>
+                {charities.map((charity) => <option key={charity.id} value={charity.id}>{charity.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-sm text-stone-600 block mb-1">Event Date</label>
+              <Input type="datetime-local" value={eventForm.event_date} onChange={(e) => setEventForm({ ...eventForm, event_date: e.target.value })} />
+            </div>
+            <div>
+              <label className="text-sm text-stone-600 block mb-1">Title</label>
+              <Input value={eventForm.title} onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })} />
+            </div>
+            <div>
+              <label className="text-sm text-stone-600 block mb-1">Location</label>
+              <Input value={eventForm.location} onChange={(e) => setEventForm({ ...eventForm, location: e.target.value })} />
+            </div>
+            <div className="md:col-span-2">
+              <label className="text-sm text-stone-600 block mb-1">Description</label>
+              <textarea value={eventForm.description} onChange={(e) => setEventForm({ ...eventForm, description: e.target.value })} className="w-full rounded-xl border border-stone-200 px-4 py-3 text-sm min-h-[80px]" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="text-sm text-stone-600 block mb-1">Registration URL</label>
+              <Input value={eventForm.registration_url} onChange={(e) => setEventForm({ ...eventForm, registration_url: e.target.value })} />
+            </div>
+          </div>
+          <Button className="mt-6" onClick={handleAddEvent}>Add Event</Button>
+        </CardContent>
+      </Card>
+
       <div className="space-y-3">
         {charities.map((c, i) => (
           <Card key={c.id} data-testid={`admin-charity-${i}`}>
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                {c.image_url && <img src={c.image_url} alt={c.name} className="w-12 h-12 rounded-lg object-cover" />}
+                {c.image_url && (
+                  <Image src={c.image_url} alt={c.name} width={48} height={48} className="w-12 h-12 rounded-lg object-cover" />
+                )}
                 <div>
                   <h4 className="font-medium text-stone-900">{c.name}</h4>
                   <div className="flex gap-2 mt-1">

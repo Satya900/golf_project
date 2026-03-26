@@ -1,9 +1,18 @@
 {
-  "/auth/login/page": "app/auth/login/page.js",
-  "/page": "app/page.js",
-  "/subscription/page": "app/subscription/page.js",
+  "/api/draws/route": "app/api/draws/route.js",
   "/draws/page": "app/draws/page.js",
   "/dashboard/page": "app/dashboard/page.js",
+  "/api/notifications/route": "app/api/notifications/route.js",
+  "/api/draws/my-results/route": "app/api/draws/my-results/route.js",
+  "/api/scores/route": "app/api/scores/route.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
   "/charities/page": "app/charities/page.js",
-  "/admin/page": "app/admin/page.js"
+  "/api/charities/route": "app/api/charities/route.js",
+  "/api/charities/[id]/route": "app/api/charities/[id]/route.js",
+  "/charities/[id]/page": "app/charities/[id]/page.js",
+  "/api/charities/select/route": "app/api/charities/select/route.js",
+  "/api/charities/[id]/donate/route": "app/api/charities/[id]/donate/route.js",
+  "/admin/draws/page": "app/admin/draws/page.js"
 }

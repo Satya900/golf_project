@@ -1,8 +1,6 @@
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || ''
-
 class ApiClient {
   constructor() {
-    this.baseUrl = `${BACKEND_URL}/api`
+    this.baseUrl = '/api'
   }
 
   async getToken() {
@@ -47,10 +45,12 @@ class ApiClient {
   signup(data) { return this.post('/auth/signup', data) }
   login(data) { return this.post('/auth/login', data) }
   getMe() { return this.get('/auth/me') }
+  updateProfile(data) { return this.put('/profile', data) }
 
   // Scores
   getScores() { return this.get('/scores') }
   addScore(data) { return this.post('/scores', data) }
+  updateScore(id, data) { return this.put(`/scores/${id}`, data) }
   deleteScore(id) { return this.delete(`/scores/${id}`) }
 
   // Subscriptions
@@ -62,6 +62,7 @@ class ApiClient {
   getCharities() { return this.get('/charities') }
   getCharity(id) { return this.get(`/charities/${id}`) }
   selectCharity(charityId, pct) { return this.post('/charities/select', { charity_id: charityId, contribution_pct: pct }) }
+  donateToCharity(charityId, amount) { return this.post(`/charities/${charityId}/donate`, { amount }) }
 
   // Draws
   getDraws() { return this.get('/draws') }
@@ -70,12 +71,14 @@ class ApiClient {
 
   // Winners
   uploadProof(resultId, imageUrl) { return this.post(`/winners/${resultId}/proof`, { proof_image_url: imageUrl }) }
+  getNotifications() { return this.get('/notifications') }
 
   // Admin
   adminGetUsers() { return this.get('/admin/users') }
   adminGetUser(id) { return this.get(`/admin/users/${id}`) }
   adminUpdateUser(id, data) { return this.put(`/admin/users/${id}`, data) }
   adminGetSubscriptions() { return this.get('/admin/subscriptions') }
+  adminUpdateSubscription(id, data) { return this.put(`/admin/subscriptions/${id}`, data) }
   adminGetCharities() { return this.get('/admin/charities') }
   adminCreateCharity(data) { return this.post('/admin/charities', data) }
   adminUpdateCharity(id, data) { return this.put(`/admin/charities/${id}`, data) }
@@ -90,6 +93,7 @@ class ApiClient {
   adminMarkPaid(id) { return this.put(`/admin/winners/${id}/pay`) }
   adminGetReports() { return this.get('/admin/reports') }
   adminUpdateScore(userId, scoreId, data) { return this.put(`/admin/users/${userId}/scores/${scoreId}`, data) }
+  adminAddCharityEvent(charityId, data) { return this.post(`/admin/charities/${charityId}/events`, data) }
 }
 
 export const api = new ApiClient()

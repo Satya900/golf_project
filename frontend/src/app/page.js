@@ -4,6 +4,7 @@ import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Heart, Trophy, Target, Users, ArrowRight, Star, TrendingUp, Gift } from 'lucide-react'
@@ -18,10 +19,13 @@ export default function Home() {
         {/* Hero */}
         <section className="relative min-h-[90vh] flex items-center overflow-hidden" data-testid="hero-section">
           <div className="absolute inset-0">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1505794718076-13e166c01a33?w=1920&q=80"
               alt="Golfer silhouette at sunset"
-              className="w-full h-full object-cover"
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-stone-900/90 via-stone-900/70 to-transparent" />
           </div>
@@ -139,11 +143,14 @@ export default function Home() {
               </div>
               <div className="lg:col-span-7">
                 <div className="relative rounded-2xl overflow-hidden">
-                  <img
+                  <Image
                     src="https://images.pexels.com/photos/6646933/pexels-photo-6646933.jpeg?auto=compress&w=800"
                     alt="Charity volunteers"
-                    className="w-full h-[400px] object-cover"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    className="object-cover"
                   />
+                  <div className="h-[400px]" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
                     <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm">Featured Charity</Badge>
                     <h3 className="mt-2 font-serif text-2xl font-bold text-white">Golf For Good Foundation</h3>

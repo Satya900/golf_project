@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Search, Heart, ArrowRight, Star } from 'lucide-react'
 
@@ -58,7 +59,7 @@ export default function CharitiesPage() {
                     <Link href={`/charities/${c.id}`}>
                       <Card className="h-full overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer" data-testid={`featured-charity-${i}`}>
                         <div className="relative h-48 overflow-hidden">
-                          <img src={c.image_url || 'https://images.pexels.com/photos/6646933/pexels-photo-6646933.jpeg?auto=compress&w=400'} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <Image src={c.image_url || 'https://images.pexels.com/photos/6646933/pexels-photo-6646933.jpeg?auto=compress&w=400'} alt={c.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                           <div className="absolute top-3 left-3">
                             <Badge className="bg-orange-600 text-white border-none">Featured</Badge>
                           </div>
@@ -108,7 +109,7 @@ export default function CharitiesPage() {
                   <Link href={`/charities/${c.id}`}>
                     <Card className="h-full overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer" data-testid={`charity-card-${i}`}>
                       <div className="relative h-40 overflow-hidden">
-                        <img src={c.image_url || 'https://images.pexels.com/photos/6995090/pexels-photo-6995090.jpeg?auto=compress&w=400'} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <Image src={c.image_url || 'https://images.pexels.com/photos/6995090/pexels-photo-6995090.jpeg?auto=compress&w=400'} alt={c.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                       </div>
                       <CardContent className="p-5">
                         <Badge variant="secondary" className="mb-2">{c.category || 'General'}</Badge>

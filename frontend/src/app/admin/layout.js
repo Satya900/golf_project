@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Navbar } from '@/components/Navbar'
-import { Users, Trophy, Heart, BarChart3, Award, Calendar, Shield } from 'lucide-react'
+import { Users, Trophy, Heart, BarChart3, Award, Calendar, Shield, CreditCard } from 'lucide-react'
 
 export default function AdminLayout({ children }) {
   const router = useRouter()
@@ -16,11 +16,12 @@ export default function AdminLayout({ children }) {
     const parsed = JSON.parse(stored)
     if (parsed.role !== 'admin') { router.push('/dashboard'); return }
     setUser(parsed)
-  }, [])
+  }, [router])
 
   const links = [
     { href: '/admin', icon: BarChart3, label: 'Overview' },
     { href: '/admin/users', icon: Users, label: 'Users' },
+    { href: '/admin/subscriptions', icon: CreditCard, label: 'Subscriptions' },
     { href: '/admin/draws', icon: Calendar, label: 'Draws' },
     { href: '/admin/charities', icon: Heart, label: 'Charities' },
     { href: '/admin/winners', icon: Award, label: 'Winners' },

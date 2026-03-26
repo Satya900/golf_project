@@ -101,3 +101,68 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+## user_problem_statement: Analyze codebase and create a full-flow test plan.
+## backend:
+##   - task: "Auth: Signup/Login"
+##     implemented: true
+##     working: true
+##     file: "frontend/src/app/api/auth/login/route.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##         -working: true
+##         -agent: "main"
+##         -comment: "Analyzed auth flow; seems implemented on both frontend and API."
+##   - task: "Subscriptions: Polar.sh Integration"
+##     implemented: true
+##     working: "NA"
+##     file: "frontend/src/app/api/webhooks/polar/route.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##         -working: "NA"
+##         -agent: "main"
+##         -comment: "Webhook and checkout logic implemented. Needs verification with real Polar events."
+##   - task: "Scores: Management"
+##     implemented: true
+##     working: true
+##     file: "frontend/src/lib/api.js"
+##     stuck_count: 0
+##     priority: "medium"
+##     needs_retesting: true
+##     status_history:
+##         -working: true
+##         -agent: "main"
+##         -comment: "Score CRUD API endpoints verified in code."
+##   - task: "Draws: Monthly Logic"
+##     implemented: true
+##     working: "NA"
+##     file: "supabase_schema.sql"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##         -working: "NA"
+##         -agent: "main"
+##         -comment: "Schema supports draws and winners. Algorithm and simulation logic in backend need testing."
+##
+## metadata:
+##   created_by: "main_agent"
+##   version: "1.0"
+##   test_sequence: 1
+##   run_ui: false
+##
+## test_plan:
+##   current_focus:
+##     - "Verify Subscription Flow (SUB-001)"
+##     - "Test Monthly Draw Simulation (ADM-003)"
+##   stuck_tasks: []
+##   test_all: true
+##   test_priority: "high_first"
+##
+## agent_communication:
+##     -agent: "main"
+##     -message: "I have analyzed the codebase and created a comprehensive test plan in `full_flow_test_plan.md`. I have also populated `test_result.md` with the initial task breakdown. Recommend starting with Subscription flow verification as it blocks Score submission."
