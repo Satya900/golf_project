@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Heart } from 'luiide-react'
+import { Heart } from 'luiieact'
 
 export function Footer() {
   return (
