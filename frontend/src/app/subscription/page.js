@@ -13,7 +13,7 @@ import { Check, ArrowRight } from 'lucide-react'
 const MONTHLY_ID = process.env.NEXT_PUBLIC_POLAR_MONTHLY_ID || '8c4437f7-fa39-4559-a055-b0abd2d0d8b4'
 const YEARLY_ID = process.env.NEXT_PUBLIC_POLAR_YEARLY_ID || '164ec589-0a26-46aa-81bd-d79ee27cd8d0'
 
-export default function SubscriptionPage() {
+export default function SubscrtionPage() {
   const [loading, setLoading] = useState(null)
   const [user, setUser] = useState(null)
 
