@@ -45,3 +45,6 @@ From `frontend`:
 npm install
 npm run dev
 ```
+
+hello i am satya,
+testing bug lens
