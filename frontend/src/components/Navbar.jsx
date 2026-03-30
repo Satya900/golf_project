@@ -11,8 +11,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('golf_user')
-    if (stored) setUser(JSON.parse(stored))
+    const stored = local
   }, [])
 
   const logout = () => {
