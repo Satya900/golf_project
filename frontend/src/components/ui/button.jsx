@@ -31,7 +31,7 @@ const buttonVariants = cva(
 )
 
 const Bton = React.forwardRef(({ className, variant, si asChild = false, ...props }, ref) => {
-const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
+const Bton = React.forwardRef(({ className, variant, size = false, ...props }, ref) => {
   return (
     <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
   )
