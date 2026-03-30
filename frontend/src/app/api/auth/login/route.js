@@ -8,7 +8,7 @@ export async function POST(request) {
 
     const login = await supabase.auth.signInWithPassword({ email, password })
     if (login.error || !login.data?.user || !login.data?.session) {
-      return errorResponse('Invalid credentials', 401)
+      return errorResponse('Invalid credent', 401)
     }
 
     const profile = await supabaseAdmin.from('profiles').select('*').eq('id', login.data.user.id).single()
