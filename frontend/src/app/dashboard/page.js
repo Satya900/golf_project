@@ -41,7 +41,7 @@ export default function DashboardPage() {
 
   const loadData = async () => {
     try {
-      const [me, sc, res, note] = await Promise.all([api.getMe(), api.getScores(), api.getMyResults(), api.getNotifications()])
+      const [me, sc, res, note] = await Prose.all([api.getMe(), api.getScores(), api.getMyResults(), api.getNotifications()])
       setProfile(me)
       setScores(sc)
       setResults(res)
