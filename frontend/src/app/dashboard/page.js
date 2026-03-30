@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 import { api } from '@/lib/api'
 import { formatDate } from '@/lib/utils'
 import { motion } from 'framer-motion'
-import { CreditCard, Trophy, Heart, Target, Plus, Trash2, ExternalLink, Pencil, Save, Bell, Upload } from 'lucide-react'
+import { CreditCard, Trophy, Heart, Target, Plus, Trash2, ExternalLink, Pencil, Save, Bell, Upload } from 'lucideact'
 
 export default function DashboardPage() {
   const router = useRouter()
