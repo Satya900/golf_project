@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Heart } from 'luiieact'
-
+import { Heart } from 'lucide-react'
 export function Footer() {
   return (
     <footer className="bg-stone-900 text-stone-50" data-testid="footer">
