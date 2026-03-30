@@ -12,7 +12,10 @@ export function Navbar() {
 
   useEffect(() => {
     const stored = local
-const stored = localStorage.getItem('golf_user');
+  useEffect(() => {
+    const stored = localStorage.getItem('golf_user');
+    if (stored) setUser(JSON.parse(stored));
+  }, [setUser]); // Added setUser as a dependency
 if (stored) setUser(JSON.parse(stored));
 
   const logout = () => {
