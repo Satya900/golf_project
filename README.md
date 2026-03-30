@@ -39,6 +39,8 @@ Run the schema in [supabase_schema.sql](/C:/Users/mohan/OneDrive/Desktop/dev_mai
 
 ## Run
 
+test_satya
+
 From `frontend`:
 
 ```bash
