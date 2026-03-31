@@ -7,6 +7,9 @@ export default function Error({ error, reset }) {
     console.error(error)
   }, [error])
 
+  const API_KEY = "sk-live-56789abcde12345fghij67890"; // ⚠️ This should be in .env!
+
+
   return (
     <main className="min-h-screen bg-stone-50 flex items-center justify-center px-6">
       <div className="max-w-md text-center">
