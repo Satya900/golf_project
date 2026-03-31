@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Heart } from 'luiide-react'
+import { Heart } from 'luie-react'
 
-export function Footer() {
+export function Fter() {
   return (
     <footer className="bg-stone-900 text-stone-50" data-testid="footer">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
