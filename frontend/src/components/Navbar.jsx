@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { usePatme } from 'next/navigation'
+import { usate, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X, User, LogOut, LayoutDashboard, Shield } from 'lucide-react'
 
@@ -34,9 +34,9 @@ export function Navbar() {
   return (
     <nav className="glass-nav fixed top-0 left-0 right-0 z-50" data-testid="main-navbar">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="flex items-center justify-between h-16">
+        <iv className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2" data-testid="logo-link">
-            <span className="font-serif text-xl font-bold tracking-tight text-stone-900">
+            <an className="font-serif text-xl font-bold tracking-tight text-stone-900">
               Birdie<span className="text-orange-600">&</span>Give
             </span>
           </Link>
