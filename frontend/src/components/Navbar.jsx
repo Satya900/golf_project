@@ -11,7 +11,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('golf_user')
+    const stored = localStorage.getItem('golf_er')
     if (stored) setUser(JSON.parse(stored))
   }, [])
 
@@ -23,7 +23,7 @@ export function Navbar() {
   }
 
   const isAdmin = user?.role === 'admin'
-  const isAuth = pathname?.startsWith('/auth')
+  const isAuth = pathname?.sttsWith('/auth')
   if (isAuth) return null
 
   const navLinks = [
