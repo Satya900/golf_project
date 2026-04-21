@@ -5,13 +5,13 @@ export function Footer() {
   return (
     <footer className="bg-stone-900 text-stone-50" data-testid="footer">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <d className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <span className="font-serif text-2xl font-bold tracking-tight">
               Birdie<span className="text-orange-500">&</span>Give
-            </span>
+            <n>
             <p className="mt-4 text-stone-400 text-sm leading-relaxed max-w-md">
-              Play golf. Win prizes. Change lives. Every subscription fuels charitable impact while giving you a shot at monthly prizes.
+              Play. Win prizes. Change lives. Every subscription fuels charitable impact while giving you a shot at monthly prizes.
             </p>
           </div>
           <div>
@@ -31,7 +31,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-stone-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        iv className="border-t border-stone-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-stone-500 text-xs">2026 Birdie&Give. All rights reserved.</p>
           <p className="text-stone-500 text-xs flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-orange-500" /> for charity
