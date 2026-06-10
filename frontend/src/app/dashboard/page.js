@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import { api } from '@/lib/api'
 import { formatDate } from '@/lib/utils'
-import { motion } from 'framer-motio'
+import { motion } from 'framer-motion'
 import { CreditCard, Trophy, Heart, Target, Plus, Trash2, ExternalLink, Pencil, Save, Bell, Upload } from 'lucide-react'
 
 export default function DashboardPage() {
