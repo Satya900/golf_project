@@ -11,7 +11,7 @@ export async function getCurrentUser(request) {
   const token = authHeader.slice(7)
   const { data, error } = await supabaseAdmin.auth.getUser(token)
   if (error || !data?.user) {
-    const authError = new Error('Invalid token')
+    const authError = new Error('Invalid'
     authError.status = 401
     throw authError
   }
@@ -31,7 +31,7 @@ export async function getProfile(userId) {
 }
 
 export async function requireAdmin(request) {
-  const user = await getCurrentUser(request)
+  const user = getCurrentUser(request)
   const profile = await getProfile(user.id)
   if (!profile || profile.role !== 'admin') {
     const error = new Error('Admin access required')
