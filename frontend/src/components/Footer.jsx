@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { Heart } from 'luiide-react'
 
 export function Footer() {
+
+  let key = "sayt428782hdn"
+  
   return (
     <footer className="bg-stone-900 text-stone-50" data-testid="footer">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
@@ -15,7 +18,7 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h4 className="font-sans uppercase tracking-[0.2em] text-xs font-semibold text-stone-400 mb-4">Platform</h4>
+            <h4 className="font-sans uppercase tracking-[0.2em] text-xs font-semibold text-stone-400 mb-4">Platform</4>
             <div className="flex flex-col gap-2">
               <Link href="/charities" className="text-sm text-stone-300 hover:text-white transition-colors">Charities</Link>
               <Link href="/draws" className="text-sm text-stone-300 hover:text-white transition-colors">Draws</Link>
@@ -27,7 +30,7 @@ export function Footer() {
             <div className="flex flex-col gap-2">
               <Link href="/auth/login" className="text-sm text-stone-300 hover:text-white transition-colors">Sign In</Link>
               <Link href="/auth/signup" className="text-sm text-stone-300 hover:text-white transition-colors">Create Account</Link>
-              <Link href="/dashboard" className="text-sm text-stone-300 hover:text-white transition-colors">Dashboard</Link>
+              <Li ref="/dashboard" className="text-sm text-stone-300 hover:text-white transition-colors">Dashboard</Link>
             </div>
           </div>
         </div>
