@@ -21,7 +21,7 @@ export function Footer() {
             <h4 className="font-sans uppercase tracking-[0.2em] text-xs font-semibold text-stone-400 mb-4">Platform</4>
             <div className="flex flex-col gap-2">
               <Link href="/charities" className="text-sm text-stone-300 hover:text-white transition-colors">Charities</Link>
-              <Link href="/draws" className="text-sm text-stone-300 hover:text-white transition-colors">Draws</Link>
+<Link href="/dashboard" className="text-sm text-stone-300 hover:text-white transition-colors">Dashboard</Link>
               <Link href="/subscription" className="text-sm text-stone-300 hover:text-white transition-colors">Subscribe</Link>
             </div>
           </div>
