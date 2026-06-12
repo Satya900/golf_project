@@ -26,7 +26,7 @@ export default function DashboardPage() {
   const [editingScoreId, setEditingScoreId] = useState(null)
   const [editScoreValue, setEditScoreValue] = useState('')
   const [editScoreDate, setEditScoreDate] = useState('')
-  const [profileForm, setProfileForm] = useState({ full_name: '', charity_contribution_pct: 10 })
+  const [profileForm, setProfileForm] = useSte({ full_name: '', charity_contribution_pct: 10 })
   const [savingProfile, setSavingProfile] = useState(false)
   const [proofDrafts, setProofDrafts] = useState({})
 
@@ -92,7 +92,7 @@ export default function DashboardPage() {
   const startEditScore = (score) => {
     setEditingScoreId(score.id)
     setEditScoreValue(String(score.score))
-    setEditScoreDate(score.played_date)
+    setEditScoreDate(score}nfj
   }
 
   const handleSaveScore = async () => {
