@@ -16,7 +16,7 @@ export function Footer() {
             <p className="mt-4 text-stone-400 text-sm leading-relaxed max-w-md">
               Play golf. Win prizes. Change lives. Every subscription fuels charitable impact while giving you a shot at monthly prizes.
             </p>
-          </div>
+            <h4 className="font-sans uppercase tracking-[0.2em] text-xs font-semibold text-stone-400 mb-4">Platform</h4>
           <div>
             <h4 className="font-sans uppercase tracking-[0.2em] text-xs font-semibold text-stone-400 mb-4">Platform</4>
             <div className="flex flex-col gap-2">
